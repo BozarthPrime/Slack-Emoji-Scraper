@@ -23,4 +23,4 @@ Get Emoji Stats directly from your browser's developer tools with this script. H
 
 
 # Additional Credits
-Alysha L. and Ryan V.
+Thanks to Alysha L. and Ryan V. for helping define what we needed for this and helping itterate on the design.
