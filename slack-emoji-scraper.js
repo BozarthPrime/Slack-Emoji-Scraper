@@ -48,7 +48,9 @@ function makeRequest(pageNum, pageSize) {
     data.append("query", "");
     data.append("page", pageNum);
     data.append("count", pageSize);
-
+    console.clear()
+    console.log("\n")
+    console.log("Emoji,Is_Alias,Alias_For,Author,Full_Date,Year,Month,Day,Time,URL")
     var request = new XMLHttpRequest();
     request.responseType ='json';
     request.onreadystatechange = function() { // Call a function when the state changes.
@@ -76,7 +78,7 @@ function makeRequest(pageNum, pageSize) {
                             month + "," + 
                             day + "," + 
                             [hour, min, sec].join(':') + "," +
-                            emojiItem.url + "\"," );
+                            emojiItem.url);
             }
 
             if (this.response.emoji.length == pageSize) {
