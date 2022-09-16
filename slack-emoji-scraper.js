@@ -38,6 +38,9 @@ function formatDate(date) {
 // Get Token from webpages
 var currentToken = boot_data.api_token;
 console.log(currentToken);
+console.clear();
+console.log("\n");
+console.log("Emoji,Is_Alias,Alias_For,Author,Full_Date,Year,Month,Day,Time,URL");
 
 var allEmoji ={};
 
@@ -48,9 +51,7 @@ function makeRequest(pageNum, pageSize) {
     data.append("query", "");
     data.append("page", pageNum);
     data.append("count", pageSize);
-    console.clear()
-    console.log("\n")
-    console.log("Emoji,Is_Alias,Alias_For,Author,Full_Date,Year,Month,Day,Time,URL")
+
     var request = new XMLHttpRequest();
     request.responseType ='json';
     request.onreadystatechange = function() { // Call a function when the state changes.
