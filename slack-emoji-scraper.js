@@ -1,6 +1,10 @@
 /*
 # Slack-Emoji-Scraper
 Pulls emoji information from a slack instance
+This script will output based on the boolean dls_output: 
+False: Emoji,Is_Alias,Alias_For,Author,Full_Date,Year,Month,Day,Time,URL
+or
+True: Emoji,URL
 
 ## Usage
 Get Emoji Stats directly from your browser's developer tools with this script. Here's how:
@@ -23,6 +27,9 @@ Get Emoji Stats directly from your browser's developer tools with this script. H
 8. Save output, formatting in bbedit or excel required
 */
 
+//Scrap only the Emoji name and URL for the Backup script also in the Slack-Emoji-Scraper Git
+let dls_output = false;
+
 function formatDate(date) {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
@@ -40,7 +47,9 @@ var currentToken = boot_data.api_token;
 console.log(currentToken);
 console.clear();
 console.log("\n");
-console.log("Emoji,Is_Alias,Alias_For,Author,Full_Date,Year,Month,Day,Time,URL");
+if(dls_output == false){
+	console.log("Emoji,Is_Alias,Alias_For,Author,Full_Date,Year,Month,Day,Time,URL");
+}
 
 var allEmoji ={};
 
@@ -58,28 +67,36 @@ function makeRequest(pageNum, pageSize) {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
             for(let emojiItem of this.response.emoji){
                 
-                var d = new Date(emojiItem.created*1000);
-                
-                var month = '' + (d.getMonth() + 1);
-                var day = '' + d.getDate();
-                var year = d.getFullYear();
-                var hour = d.getHours() + 1;
-                var min = d.getMinutes() + 1;
-                var sec = d.getSeconds() + 1;
+                if(dls_output == false){
+					var d = new Date(emojiItem.created*1000);
+				
+					var month = '' + (d.getMonth() + 1);
+					var day = '' + d.getDate();
+					var year = d.getFullYear();
+					var hour = d.getHours() + 1;
+					var min = d.getMinutes() + 1;
+					var sec = d.getSeconds() + 1;
 
-                if (month.length < 2) month = '0' + month;
-                if (day.length < 2) day = '0' + day;
+					if (month.length < 2) month = '0' + month;
+					if (day.length < 2) day = '0' + day;
 
-                console.log(":" + emojiItem.name + ":," + 
-                            emojiItem.is_alias + "," + 
-                            emojiItem.alias_for + ",\"" + 
-                            emojiItem.user_display_name + "\"," +
-                            [year, month, day].join('-') + "," + 
-                            year + "," + 
-                            month + "," + 
-                            day + "," + 
-                            [hour, min, sec].join(':') + "," +
-                            emojiItem.url);
+					console.log(":" + emojiItem.name + ":," + 
+								emojiItem.is_alias + "," + 
+								emojiItem.alias_for + ",\"" + 
+								emojiItem.user_display_name + "\"," +
+								[year, month, day].join('-') + "," + 
+								year + "," + 
+								month + "," + 
+								day + "," + 
+								[hour, min, sec].join(':') + "," +
+								emojiItem.url);
+				}
+				else if(dls_output == true){
+					
+					console.log(emojiItem.name + "," + 
+								emojiItem.url);
+				
+				}
             }
 
             if (this.response.emoji.length == pageSize) {
